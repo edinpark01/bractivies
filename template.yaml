@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Bractivity Serverless Configuration
+
+Globals:
+  Function:
+    Runtime: python3.8
+    Timeout: 3
+    MemorySize: 128
+    Handler: index.lambda_handler
+
+Resources:
+  auth:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: bractivity/auth
+      Environment:
+        Variables:
+          CLIENT_ID: undefined
+          CLIENT_SECRET: undefined
+          TOKEN_REFRESH: undefined
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /auth
+            Method: GET
+
+  parameterStoreHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: bractivity/admin/parameter_store
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /admin/parameter_store
+            Method: GET
