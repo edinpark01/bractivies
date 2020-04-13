@@ -6,6 +6,14 @@ client = boto3.client('ssm')
 
 
 def lambda_handler(event, context):
+    """
+    This function handles AWS System Manager's Parameter Store.
+    :param event: Ought to include the following:
+        :action: api-call argument specifiying what kind of action
+                 is to be performed, options available are:
+                    -> list, create, delete
+    :param context: Meh
+    """
     body = {k.lower(): v for k, v in event.items() if k.lower() == 'body'}
 
     if not body or not body.get('body'):
